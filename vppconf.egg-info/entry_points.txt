@@ -1,0 +1,2 @@
+[console_scripts]
+vppconf = vppconf.vppconf:main
