@@ -106,6 +106,27 @@
                         "minItems": 1,
                         "maxItems": 2
                     }
+                },
+                "timeouts": {
+                    "type": "object",
+                    "description": "Session timeout values.",
+                    "properties": {
+                         "embryonic": {
+                             "type": "integer"
+                         },
+                         "established": {
+                             "type": "integer"
+                         },
+                         "tcp-transitory": {
+                             "type": "integer"
+                         },
+                         "tcp-established": {
+                             "type": "integer"
+                         },
+                         "security": {
+                             "type": "integer"
+                         }
+                    }
                 }
             }
         },
