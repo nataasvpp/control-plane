@@ -75,6 +75,15 @@ class VcdpNat(VppCall):
 
 
 class VcdpTenant(VppCall):
+
+    timeout_names = [
+        "embryonic",
+        "established",
+        "tcp-transitory",
+        "tcp-established",
+        "security",
+    ]
+
     def __init__(self, caller):
         super().__init__(caller)
         self.dispatch = {
@@ -82,6 +91,7 @@ class VcdpTenant(VppCall):
             "reverse-services": self.service,
             "nat-instance": self.nat_instance,
             "tcp-mss": self.tcp_mss,
+            "timeouts": self.timeouts,
         }
 
     def call(self, tenant_id, obj, add):
@@ -138,6 +148,19 @@ class VcdpTenant(VppCall):
             "is_enable": is_add,
         }
         self.caller.call(name, params)
+
+    def timeouts(self, _, tenant_id, obj, is_add):
+        if not is_add:
+            return
+
+        name = "vcdp_set_timeout"
+        params = {
+            "tenant_id": tenant_id,
+        }
+        for to_name, to_value in obj.items():
+            params["timeout_id"] = VcdpTenant.timeout_names.index(to_name)
+            params["timeout_value"] = int(to_value)
+            self.caller.call(name, params)
 
 
 ##############################################################################

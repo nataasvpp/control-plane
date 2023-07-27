@@ -92,12 +92,16 @@ class TestVppConfigParser(TestCase):
                     ],
                     "reverse-services": ["vcdp-l4-lifecycle", "vcdp-tunnel-output"],
                     "nat-instance": "6529f996-2854-4d78-8337-059053a2c61f",
+                    "timeouts": {
+                        "embryonic": 5,
+                        "tcp-transitory": 60,
+                    }
                 }
             }
         }
 
         self.parser.parse(desired, running)
-        self.assertEqual(len(self.caller.calls), 5)
+        self.assertEqual(len(self.caller.calls), 7)
 
     def test_remove_interface(self):
         running = {
@@ -135,6 +139,10 @@ class TestVppConfigParser(TestCase):
                     ],
                     "reverse-services": ["vcdp-l4-lifecycle", "vcdp-tunnel-output"],
                     "nat-instance": "6529f996-2854-4d78-8337-059053a2c61f",
+                    "timeouts": {
+                        "embryonic": 5,
+                        "tcp-transitory": 60,
+                    }
                 }
             }
         }
